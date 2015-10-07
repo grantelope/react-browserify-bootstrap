@@ -1,0 +1,20 @@
+{
+  "name": "Automat",
+  "version": "2.0.0",
+  "homepage": "https://github.com/foodgenius/automat",
+  "authors": [
+    "Food Genius <developers@getfoodgenius.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "modernizr": "~2.8.3"
+  }
+}

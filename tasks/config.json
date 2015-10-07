@@ -1,0 +1,77 @@
+{
+  "app": {
+    "main-app-js": {
+      "entries": [
+        "./app/index.js"
+      ],
+      "filename": "app",
+      "libs": "app-libs-js",
+      "dist": "./static/js"
+    }
+  },
+  "libs": {
+    "app-libs-js": {
+      "filename": "libs",
+      "libs": [
+        "alt",
+        "axios",
+        "react"
+      ],
+      "dist": "./static/js"
+    }
+  },
+  "less": {
+    "app-less": {
+      "src": "./app/less/styles.less",
+      "dist": "./static/css",
+      "filename": "app",
+      "watch": "./app/less/**/*.less",
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ],
+        "cascade": false
+      },
+      "base64": {
+        "maxImageSize": 102400,
+        "extensions": [
+          "svg"
+        ]
+      }
+    }
+  },
+  "copy": {
+    "copy-images": {
+      "files": [
+        "./node_modules/pantry/assets/images/**/*",
+        "./node_modules/pantry/modules/automat/images/**/*"
+      ],
+      "dist": "./static/images"
+    },
+    "copy-fonts": {
+      "files": [
+        "./node_modules/pantry/assets/fonts/**/*",
+        "./fonts/**/*"
+      ],
+      "dist": "./static/fonts"
+    }
+  },
+  "s3": {
+    "s3-images": {
+      "files": "./static/images/**/*",
+      "uploadPath": "automat/public/images"
+    },
+    "s3-fonts": {
+      "files": "./static/fonts/**/*",
+      "uploadPath": "automat/public/fonts"
+    },
+    "s3-css": {
+      "files": "./static/css/**/*",
+      "uploadPath": "automat/public/css"
+    },
+    "s3-js": {
+      "files": "./static/js/**/*",
+      "uploadPath": "automat/public/js"
+    }
+  }
+}

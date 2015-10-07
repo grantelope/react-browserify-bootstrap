@@ -1,0 +1,9 @@
+instrumentation:
+  root: app
+extensions:
+  - .jsx
+  - .js
+reporting:
+  reports:
+    - text
+    - html
