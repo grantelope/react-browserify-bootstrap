@@ -6,6 +6,7 @@ import page from 'page';
 
 let routes = [];
 let currentPath = '';
+let currentCanonicalPath = '';
 let currentStores = [];
 
 const Router = {};
@@ -21,7 +22,7 @@ RouteStore.listen(() => {
 });
 
 function storeListener() {
-  RouteActions.update.defer({ctx: currentPath, stores: currentStores});
+  RouteActions.update.defer({ctx: currentCanonicalPath, path: currentPath, stores: currentStores});
 }
 
 function setListeners(stores, actions) {
@@ -36,15 +37,16 @@ function createRoute(route, stores, actions, callback) {
   routes.push({route, stores, callback});
 
   page(route, ctx => {
-    currentPath = ctx.canonicalPath;
+    currentPath = route;
+    currentCanonicalPath = ctx.canonicalPath;
     setListeners(stores, actions);
-    RouteActions.start({ctx, stores});
+    RouteActions.start({route, stores});
   });
 }
 
 function start() {
   page('*', function () {
-    page('/');
+    page('/not-found');
   });
 
   page();
