@@ -69,28 +69,23 @@
   "s3": {
     "s3-images": {
       "files": "../static/images/**/*",
-      "uploadPath": "woey/public/images/",
-      "gzip": true
+      "uploadPath": "woey/public/images/"
     },
     "s3-fonts": {
       "files": "../static/fonts/**/*",
-      "uploadPath": "woey/public/fonts/",
-      "gzip": true
+      "uploadPath": "woey/public/fonts/"
     },
     "s3-css": {
       "files": "../static/css/**/*",
-      "uploadPath": "woey/public/css/",
-      "gzip": true
+      "uploadPath": "woey/public/css/"
     },
     "s3-js": {
       "files": "../static/js/**/*",
-      "uploadPath": "woey/public/js/",
-      "gzip": true
+      "uploadPath": "woey/public/js/"
     },
     "s3-html": {
       "files": "../app.html",
-      "uploadPath": "woey/releases/",
-      "requiresTag": true
+      "uploadPath": "woey/releases/"
     }
   }
 }
