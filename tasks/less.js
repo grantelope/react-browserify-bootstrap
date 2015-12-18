@@ -1,4 +1,6 @@
-var del = require('del'),
+'use strict';
+
+const del = require('del'),
   less = require('gulp-less'),
   LessPluginCleanCSS = require("less-plugin-clean-css"),
   cleancss = new LessPluginCleanCSS({
@@ -16,16 +18,9 @@ var del = require('del'),
   gutil = require('gulp-util'),
   gulpif = require('gulp-if');
 
-module.exports = Task;
-
 function onError(err) {
-  gutil.beep();
-  console.log(err);
+  gutil.beep(err);
   this.emit('end');
-};
-
-module.exports = function (conf, allConf, callback) {
-  return new Task(conf, allConf, callback);
 }
 
 function Task(conf, allConf, callback) {
@@ -36,40 +31,41 @@ function Task(conf, allConf, callback) {
 }
 
 Task.prototype.run = function (callback) {
-  var self = this;
-
   this.removeOld().then(function () {
-    self.build();
-  });
+    this.build();
+  }.bind(this));
 
   if (process.env.WATCH) {
-    watch(this.conf.watch, function() {
-      self.build();
-    });
+    watch(this.conf.watch, function () {
+      this.build();
+    }.bind(this));
   } else {
     callback();
   }
 };
 
 Task.prototype.removeOld = function () {
-  return del([ this.conf.dist + '/' + this.conf.filename + '.*.*'], { force: true });
+  return del([this.conf.dist + '/' + this.conf.filename + '.*.*'], {
+    force: true
+  });
 };
 
 Task.prototype.build = function () {
-  var self = this;
-
-  gulp.src(self.conf.src)
-    .pipe(plumber({ errorHandler: onError }))
+  gulp.src(this.conf.src)
+    .pipe(plumber({errorHandler: onError}))
     .pipe(sourcemaps.init())
     .pipe(less({
       plugins: cleancss,
       compress: true,
       modifyVars: {'@git-hash': process.env.GIT_HASH}
     }))
-    .pipe(gulpif(self.conf.autoprefixer, autoprefixer(self.conf.autoprefixer)))
-    .pipe(gulpif(self.conf.base64, base64(self.conf.base64)))
-    .pipe(rename(self.newFileName))
+    .pipe(gulpif(this.conf.autoprefixer, autoprefixer(this.conf.autoprefixer)))
+    .pipe(gulpif(this.conf.base64, base64(this.conf.base64)))
+    .pipe(rename(this.newFileName))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(self.conf.dist));
+    .pipe(gulp.dest(this.conf.dist));
+};
 
+module.exports = function (conf, allConf, callback) {
+  return new Task(conf, allConf, callback);
 };

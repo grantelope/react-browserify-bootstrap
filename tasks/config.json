@@ -2,11 +2,11 @@
   "app": {
     "main-app-js": {
       "entries": [
-        "./app/index.js"
+        "./app.js"
       ],
       "filename": "app",
       "libs": "app-libs-js",
-      "dist": "./static/js"
+      "dist": "../static/js"
     }
   },
   "libs": {
@@ -15,17 +15,26 @@
       "libs": [
         "alt",
         "axios",
-        "react"
+        "brace",
+        "hashids",
+        "moment",
+        "nprogress",
+        "react",
+        "react-ace",
+        "react-dom",
+        "react-pagify",
+        "react-portal",
+        "react-select"
       ],
-      "dist": "./static/js"
+      "dist": "../static/js"
     }
   },
   "less": {
     "app-less": {
-      "src": "./app/less/styles.less",
-      "dist": "./static/css",
+      "src": "./less/styles.less",
+      "dist": "../static/css",
       "filename": "app",
-      "watch": "./app/less/**/*.less",
+      "watch": "./less/**/*.less",
       "autoprefixer": {
         "browsers": [
           "last 2 versions"
@@ -44,34 +53,44 @@
     "copy-images": {
       "files": [
         "./node_modules/pantry/assets/images/**/*",
-        "./node_modules/pantry/modules/automat/images/**/*"
+        "./node_modules/pantry/modules/automat/images/**/*",
+        "./images/**/*"
       ],
-      "dist": "./static/images"
+      "dist": "../static/images"
     },
     "copy-fonts": {
       "files": [
         "./node_modules/pantry/assets/fonts/**/*",
         "./fonts/**/*"
       ],
-      "dist": "./static/fonts"
+      "dist": "../static/fonts"
     }
   },
   "s3": {
     "s3-images": {
-      "files": "./static/images/**/*",
-      "uploadPath": "automat/public/images"
+      "files": "../static/images/**/*",
+      "uploadPath": "woey/public/images/",
+      "gzip": true
     },
     "s3-fonts": {
-      "files": "./static/fonts/**/*",
-      "uploadPath": "automat/public/fonts"
+      "files": "../static/fonts/**/*",
+      "uploadPath": "woey/public/fonts/",
+      "gzip": true
     },
     "s3-css": {
-      "files": "./static/css/**/*",
-      "uploadPath": "automat/public/css"
+      "files": "../static/css/**/*",
+      "uploadPath": "woey/public/css/",
+      "gzip": true
     },
     "s3-js": {
-      "files": "./static/js/**/*",
-      "uploadPath": "automat/public/js"
+      "files": "../static/js/**/*",
+      "uploadPath": "woey/public/js/",
+      "gzip": true
+    },
+    "s3-html": {
+      "files": "../app.html",
+      "uploadPath": "woey/releases/",
+      "requiresTag": true
     }
   }
 }

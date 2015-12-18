@@ -1,5 +1,12 @@
 instrumentation:
-  root: app
+  root: .
+  default-excludes: true
+  embed-source: false
+  variable: __coverage__
+  compact: true
+  preserve-comments: false
+  complete-copy: false
+  save-baseline: false
 extensions:
   - .jsx
   - .js
@@ -7,3 +14,4 @@ reporting:
   reports:
     - text
     - html
+  dir: ./coverage

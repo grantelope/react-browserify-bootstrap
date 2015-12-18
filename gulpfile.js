@@ -1,18 +1,20 @@
-var _ = require('lodash'),
+'use strict';
+
+const _ = require('lodash'),
   argv = require('yargs').argv,
   git = require('git-rev-sync'),
   gulp = require('gulp'),
   taskConfig = require('./tasks/config.json');
 
-var AppTask = require('./tasks/app'),
+const AppTask = require('./tasks/app'),
   LibsTask = require('./tasks/libs'),
   CopyTask = require('./tasks/copy'),
-  LessTask = require('./tasks/less');
+  LessTask = require('./tasks/less'),
+  s3Task = require('./tasks/s3');
 
-var allTasks = [];
+let args, hash, allTasks = [];
 
 _.each(taskConfig.app, function (conf, appName) {
-
   allTasks.push(appName);
 
   gulp.task(appName, function (callback) {
@@ -21,7 +23,6 @@ _.each(taskConfig.app, function (conf, appName) {
 });
 
 _.each(taskConfig.libs, function (conf, appName) {
-
   allTasks.push(appName);
 
   gulp.task(appName, function (callback) {
@@ -30,7 +31,6 @@ _.each(taskConfig.libs, function (conf, appName) {
 });
 
 _.each(taskConfig.copy, function (conf, appName) {
-  
   allTasks.push(appName);
 
   gulp.task(appName, function (callback) {
@@ -39,21 +39,31 @@ _.each(taskConfig.copy, function (conf, appName) {
 });
 
 _.each(taskConfig.less, function (conf, appName) {
+  allTasks.push(appName);
+
   gulp.task(appName, function (callback) {
     LessTask(conf, taskConfig, callback);
   });
 });
 
+_.each(taskConfig.s3, function (conf, appName) {
+  gulp.task(appName, function (callback) {
+    s3Task(conf, taskConfig, callback);
+  });
+});
 
-var args, hash = 'hashy'; //argv.hash || git.short();
+gulp.task('template', require('./tasks/template'));
+allTasks.push('template');
 
-var production = argv.production || false;
+hash = argv.hash || git.short();
+
 process.env.NODE_ENV = argv.dev ? 'development' : '';
-process.env.GIT_HASH = 'x' + hash; /* if it starts w/ an integer, LESS does weird things */
+
+/* if it starts w/ an integer, LESS does weird things */
+process.env.GIT_HASH = 'x' + hash;
 process.env.WATCH = argv.watch || '';
 
 args = argv._.length > 0 ? argv._ : allTasks;
 args = _.intersection(args, allTasks);
-// gulp = require('./tasks')([].concat(args).concat(otherTasks));
 
 gulp.task('default', args);
