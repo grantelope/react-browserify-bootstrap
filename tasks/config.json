@@ -87,5 +87,26 @@
       "files": "../app.html",
       "uploadPath": "woey/releases/"
     }
+  },
+  "metalsmith": {
+    "inline-for-blast": {
+      "src": "./assets/email/pages/*",
+      "dist": "./emails",
+      "layouts": {
+        "engine": "handlebars",
+        "directory": "./assets/email",
+        "default": "layouts/default.hbs"
+      },
+      "partials": "./assets/email/partials",
+      "cheerio": {
+        "parserOptions": {
+          "normalizeWhitespace": false,
+          "xmlMode": false,
+          "decodeEntities": false
+        },
+        "inlineCSS": true,
+        "func": "inlineDownloadRun"
+      }
+    }
   }
 }
